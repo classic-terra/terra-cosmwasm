@@ -2,7 +2,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use crate::route::TerraRoute;
-use cosmwasm_std::{Coin, CosmosMsg};
+use cosmwasm_std::{Coin, CosmosMsg, CustomMsg};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
@@ -11,6 +11,8 @@ pub struct TerraMsgWrapper {
     pub route: TerraRoute,
     pub msg_data: TerraMsg,
 }
+
+impl CustomMsg for TerraMsgWrapper {}
 
 // this is a helper to be able to return these as CosmosMsg easier
 impl From<TerraMsgWrapper> for CosmosMsg<TerraMsgWrapper> {

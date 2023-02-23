@@ -1,1 +1,2 @@
+0084780e25324e9995d0b8ded1fef6711e370140380deda228b8bccd61e86a4d  bindings_tester-aarch64.wasm
 c050a9e102a2baaf4152134deedb53ad0307d60bdc3168efdb28f496585fb231  bindings_tester.wasm

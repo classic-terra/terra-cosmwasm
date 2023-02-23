@@ -1,3 +1,5 @@
+#[cfg(not(feature = "imported"))]
+use cosmwasm_std::entry_point;
 use cosmwasm_std::{
     to_binary, Addr, Coin, Deps, DepsMut, Env, MessageInfo, QueryResponse, Response, StdError,
     StdResult,
@@ -6,9 +8,10 @@ use cosmwasm_std::{
 use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use terra_cosmwasm::{
     create_swap_msg, create_swap_send_msg, ContractInfoResponse, ExchangeRatesResponse,
-    SwapResponse, TaxCapResponse, TaxRateResponse, TerraMsgWrapper, TerraQuerier,
+    SwapResponse, TaxCapResponse, TaxRateResponse, TerraMsgWrapper, TerraQuerier, TerraQueryWrapper
 };
 
+#[cfg_attr(not(feature = "imported"), entry_point)]
 pub fn instantiate(
     _deps: DepsMut,
     _env: Env,
@@ -18,6 +21,7 @@ pub fn instantiate(
     Ok(Response::new())
 }
 
+#[cfg_attr(not(feature = "imported"), entry_point)]
 pub fn execute(
     deps: DepsMut,
     env: Env,
@@ -54,7 +58,8 @@ pub fn execute_msg_swap(
     Ok(Response::new().add_message(msg))
 }
 
-pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<QueryResponse> {
+#[cfg_attr(not(feature = "imported"), entry_point)]
+pub fn query(deps: Deps<TerraQueryWrapper>, _env: Env, msg: QueryMsg) -> StdResult<QueryResponse> {
     match msg {
         QueryMsg::Swap {
             offer_coin,
@@ -72,21 +77,21 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<QueryResponse> {
     }
 }
 
-pub fn query_swap(deps: Deps, offer_coin: Coin, ask_denom: String) -> StdResult<SwapResponse> {
+pub fn query_swap(deps: Deps<TerraQueryWrapper>, offer_coin: Coin, ask_denom: String) -> StdResult<SwapResponse> {
     let querier = TerraQuerier::new(&deps.querier);
     let res: SwapResponse = querier.query_swap(offer_coin, ask_denom)?;
 
     Ok(res)
 }
 
-pub fn query_tax_rate(deps: Deps) -> StdResult<TaxRateResponse> {
+pub fn query_tax_rate(deps: Deps<TerraQueryWrapper>) -> StdResult<TaxRateResponse> {
     let querier = TerraQuerier::new(&deps.querier);
     let res: TaxRateResponse = querier.query_tax_rate()?;
 
     Ok(res)
 }
 
-pub fn query_tax_cap(deps: Deps, denom: String) -> StdResult<TaxCapResponse> {
+pub fn query_tax_cap(deps: Deps<TerraQueryWrapper>, denom: String) -> StdResult<TaxCapResponse> {
     let querier = TerraQuerier::new(&deps.querier);
     let res: TaxCapResponse = querier.query_tax_cap(denom)?;
 
@@ -94,7 +99,7 @@ pub fn query_tax_cap(deps: Deps, denom: String) -> StdResult<TaxCapResponse> {
 }
 
 pub fn query_exchange_rates(
-    deps: Deps,
+    deps: Deps<TerraQueryWrapper>,
     base_denom: String,
     quote_denoms: Vec<String>,
 ) -> StdResult<ExchangeRatesResponse> {
@@ -105,7 +110,7 @@ pub fn query_exchange_rates(
 }
 
 pub fn query_contract_info(
-    deps: Deps,
+    deps: Deps<TerraQueryWrapper>,
     contract_address: String,
 ) -> StdResult<ContractInfoResponse> {
     let querier = TerraQuerier::new(&deps.querier);

@@ -1,0 +1,1 @@
+c9e2f00171558664f5b5932e0b8cbfe071ef38f76dab5f86029ca23aa44dad4c  ./target/wasm32-unknown-unknown/release/bindings_tester.wasm
