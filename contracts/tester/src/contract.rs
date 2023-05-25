@@ -7,7 +7,7 @@ use cosmwasm_std::{
 
 use crate::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
 use terra_cosmwasm::{
-    create_swap_msg, create_swap_send_msg, ContractInfoResponse, ExchangeRatesResponse,
+    create_swap_msg, create_swap_send_msg/*, ContractInfoResponse*/, ExchangeRatesResponse,
     SwapResponse, TaxCapResponse, TaxRateResponse, TerraMsgWrapper, TerraQuerier, TerraQueryWrapper
 };
 
@@ -71,9 +71,10 @@ pub fn query(deps: Deps<TerraQueryWrapper>, _env: Env, msg: QueryMsg) -> StdResu
             base_denom,
             quote_denoms,
         } => to_binary(&query_exchange_rates(deps, base_denom, quote_denoms)?),
-        QueryMsg::ContractInfo { contract_address } => {
+        // not supported
+        /*QueryMsg::ContractInfo { contract_address } => {
             to_binary(&query_contract_info(deps, contract_address)?)
-        }
+        }*/
     }
 }
 
@@ -109,6 +110,8 @@ pub fn query_exchange_rates(
     Ok(res)
 }
 
+// not supported
+/*
 pub fn query_contract_info(
     deps: Deps<TerraQueryWrapper>,
     contract_address: String,
@@ -118,3 +121,4 @@ pub fn query_contract_info(
 
     Ok(res)
 }
+*/

@@ -34,7 +34,9 @@ pub enum QueryMsg {
         base_denom: String,
         quote_denoms: Vec<String>,
     },
+    // not supported
+    /*
     ContractInfo {
         contract_address: String,
-    },
+    },*/
 }
