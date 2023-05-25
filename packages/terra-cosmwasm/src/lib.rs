@@ -7,7 +7,7 @@ pub use msg::{create_swap_msg, create_swap_send_msg, TerraMsg, TerraMsgWrapper};
 pub use querier::TerraQuerier;
 pub use query::{
     ContractInfoResponse, ExchangeRateItem, ExchangeRatesResponse, SwapResponse, TaxCapResponse,
-    TaxRateResponse, TerraQuery, TerraQueryWrapper,
+    TaxRateResponse,  TerraQueryWrapper,
 };
 pub use route::TerraRoute;
 

@@ -1,23 +1,14 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::route::TerraRoute;
 use cosmwasm_std::{Coin, Decimal, Uint128, CustomQuery};
 
 /// TerraQueryWrapper is an override of QueryRequest::Custom to access Terra-specific modules
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
-pub struct TerraQueryWrapper {
-    pub route: TerraRoute,
-    pub query_data: TerraQuery,
-}
-
-impl CustomQuery for TerraQueryWrapper {}
 
 /// TerraQuery is defines available query datas
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
-pub enum TerraQuery {
+pub enum TerraQueryWrapper {
     Swap {
         offer_coin: Coin,
         ask_denom: String,
@@ -30,10 +21,13 @@ pub enum TerraQuery {
         base_denom: String,
         quote_denoms: Vec<String>,
     },
-    ContractInfo {
+    // not supported
+    /*ContractInfo {
         contract_address: String,
-    },
+    },*/
 }
+
+impl CustomQuery for TerraQueryWrapper {}
 
 /// SwapResponse is data format returned from SwapRequest::Simulate query
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

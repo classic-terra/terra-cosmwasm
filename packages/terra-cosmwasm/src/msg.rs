@@ -1,8 +1,9 @@
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-use crate::route::TerraRoute;
 use cosmwasm_std::{Coin, CosmosMsg, CustomMsg};
+
+use crate::TerraRoute;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "snake_case")]
